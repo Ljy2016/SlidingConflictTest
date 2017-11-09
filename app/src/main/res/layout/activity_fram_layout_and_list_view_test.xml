@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.azadljy.slidingconflicttest.FramLayoutAndListViewTestActivity">
+
+    <com.example.azadljy.slidingconflicttest.weight.MyTestFramLayout
+        android:id="@+id/framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       >
+
+        <com.example.azadljy.slidingconflicttest.weight.MyTestListView
+            android:id="@+id/test_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </com.example.azadljy.slidingconflicttest.weight.MyTestFramLayout>
+</android.support.constraint.ConstraintLayout>

@@ -27,10 +27,12 @@ public class MyTestScrollView extends ScrollView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Log.e("TAG", "onMeasure: childHeightMode--------"+isFillViewport());
-        setFillViewport(true);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Log.e("TAG", "onMeasure: childHeightMode--------" + isFillViewport());
         final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        Log.e("TAG", "onMeasure: scrollview  heightMode------" + heightMode);
+//      setFillViewport(true);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
         Log.e("TAG", "onMeasure: scrollview  heightMode------" + heightMode);
         final int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
                 1460, MeasureSpec.EXACTLY);
