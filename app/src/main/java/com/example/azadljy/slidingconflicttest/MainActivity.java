@@ -9,6 +9,9 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 
+import com.example.azadljy.slidingconflicttest.weight.MyTestListView;
+import com.example.azadljy.slidingconflicttest.weight.MyTestScrollView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +19,8 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-    private ListView listView;
-    private ScrollView scrollView;
+    private MyTestListView listView;
+    private MyTestScrollView scrollView;
     String TAG = "test";
 
     @Override
@@ -25,24 +28,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         List<Map<String, Object>> listems = new ArrayList<>();
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 5; i++) {
             Map<String, Object> map = new HashMap<>();
             map.put("name", "小明" + i);
             listems.add(map);
         }
-        listView = (ListView) findViewById(R.id.test_listview);
-        scrollView = (ScrollView) findViewById(R.id.scrollView);
+        listView = (MyTestListView) findViewById(R.id.test_listview);
+        scrollView = (MyTestScrollView) findViewById(R.id.scrollView);
         listView.setAdapter(new SimpleAdapter(this, listems, R.layout.item, new String[]{"name"}, new int[]{R.id.list_item}));
-
-        Log.e(TAG, "onCreate: " + listView.getMeasuredHeight());
-        Log.e(TAG, "onCreate: " + scrollView.getMeasuredHeight());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume: " + listView.getMeasuredHeight());
-        Log.e(TAG, "onResume: " + scrollView.getMeasuredHeight());
     }
 
     public void go(View view) {

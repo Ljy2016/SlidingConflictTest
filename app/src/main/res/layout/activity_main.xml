@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.azadljy.slidingconflicttest.MainActivity">
 
-    <ScrollView
+    <com.example.azadljy.slidingconflicttest.weight.MyTestScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -18,13 +18,13 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/button">
 
-        <ListView
+        <com.example.azadljy.slidingconflicttest.weight.MyTestListView
         android:id="@+id/test_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        </ListView>
+        </com.example.azadljy.slidingconflicttest.weight.MyTestListView>
 
-    </ScrollView>
+    </com.example.azadljy.slidingconflicttest.weight.MyTestScrollView>
 
     <Button
         android:id="@+id/button"
