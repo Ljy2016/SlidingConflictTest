@@ -1,0 +1,74 @@
+一句话总结：ScrollView重写了它的父类FrameLayout的measureChild和measureChildWithMargins方法，使传入子类的HeightMeasureSpec的模式为UNSPECIFIED，
+            导致listview计算高度时跳过了measureHeightOfChildren方法的执行，只计算了第一个item的高度。
+分析：      首先看listview的onMeasure方法中关于高度的赋值：
+
+                1276行：
+                int heightSize = MeasureSpec.getSize(heightMeasureSpec);//从heightMeasureSpec中获取高度
+
+                1308行：
+                //如果为UNSPECIFIED则高度为第一个child的高度加上边距
+                if (heightMode == MeasureSpec.UNSPECIFIED) {
+                         heightSize = mListPadding.top + mListPadding.bottom + childHeight +
+                                 getVerticalFadingEdgeLength() * 2;
+                     }
+                1313行：
+                  //如果为AT_MOST则去执行measureHeightOfChildren方法，计算最大高度
+                if (heightMode == MeasureSpec.AT_MOST) {
+                         // TODO: after first layout we should maybe start at the first visible position, not 0
+                         heightSize = measureHeightOfChildren(widthMeasureSpec, 0, NO_POSITION, heightSize, -1);
+                     }
+
+              可以看出listview的高度计算取决于传入onMeasure方法的MeasureSpec的mode类型。通过了解View的测量流程可以知道，onMeasure方法在measure方法中被调用。
+              而measure方法一般被其父view调用。此嵌套情况下，listview的父view是scrollview，那么现在去看一下scrollview中onMeasure的情况：
+
+              super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+                  if (!mFillViewport) {
+                          return;
+                   }
+
+              注意开始的这两行判断，mFillViewport默认是false的，在我们没有人为设置的情况下，onMeasure执行到这里就return了，下面的代码是不会执行的。所以真正执行
+              的应该只有super.onMeasure(widthMeasureSpec, heightMeasureSpec);调用父类的onMeasure方法，ScrollView的父类是Framlayout，Framlayout的高度测量调用的是
+              ViewGroup提供的getChildMeasureSpec方法。此方法内只有当父view的MeasureSpec的mode为UNSPECIFIED时，子view才有可能被赋予UNSPECIFIED。（通过实际测试，
+              FrameLayout嵌套ListView并不会对ListView产生影响。通过DEBUG也发现ScrollView调用父类onMeasure方法时传入的heightMeasureSpec的mdoe也并非是UNSPECIFIED）
+              那么可以确定，还是ScrollView自身对ListView产生了影响，与FrameLayout关系不大。那么视线就转到了ScrollView对FrameLayout的方法的重写上：
+
+
+               @Override
+                  protected void measureChild(View child, int parentWidthMeasureSpec,
+                          int parentHeightMeasureSpec) {
+
+                      ......
+                      childHeightMeasureSpec = MeasureSpec.makeSafeMeasureSpec(
+                              Math.max(0, MeasureSpec.getSize(parentHeightMeasureSpec) - verticalPadding),
+                              MeasureSpec.UNSPECIFIED);
+
+                      child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+                  }
+
+                @Override
+                   protected void measureChildWithMargins(View child, int parentWidthMeasureSpec, int widthUsed,
+                           int parentHeightMeasureSpec, int heightUsed) {
+
+                      ......
+                       final int childHeightMeasureSpec = MeasureSpec.makeSafeMeasureSpec(
+                               Math.max(0, MeasureSpec.getSize(parentHeightMeasureSpec) - usedTotal),
+                               MeasureSpec.UNSPECIFIED);
+
+                       child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+                   }
+
+                可以看到ScrollView重写了measureChild和measureChildWithMargins方法，并将childHeightMeasureSpec的mode强制更改为UNSPECIFIED。调用的父类的onMeasure方法中
+                执行的measureChildWithMargins方法其实是ScrollView重写过的。最终导致ListView的heightMode为UNSPECIFIED。
+
+
+
+
+
+
+
+
+
+
+
+
