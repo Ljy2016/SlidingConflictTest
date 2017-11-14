@@ -22,17 +22,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="#333333"
+                />
+            <ImageView
+                android:layout_width="match_parent"
+                android:background="#378399"
+                android:layout_height="100dp" />
             <com.example.azadljy.slidingconflicttest.weight.MyTestListView
                 android:id="@+id/test_listview"
                 android:layout_width="match_parent"
+                android:background="#ee9933"
                 android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />
 
-            <Button
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />
             <!--<Button-->

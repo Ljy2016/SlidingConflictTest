@@ -3,6 +3,7 @@ package com.example.azadljy.slidingconflicttest.weight;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.ListView;
 
 /**
@@ -33,4 +34,15 @@ public class MyTestListView extends ListView {
         Log.e("TAG", "onMeasure: listview  heightMode------" + heightMode);
     }
 
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        return false;
+//    }
+
+
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        Log.e("TAG", "onInterceptTouchEvent: "+ev.getAction());
+//        return super.onInterceptTouchEvent(ev);
+//    }
 }

@@ -30,7 +30,7 @@ public class MyTestScrollView extends ScrollView {
         Log.e("TAG", "onMeasure: childHeightMode--------" + isFillViewport());
         final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         Log.e("TAG", "onMeasure: scrollview  heightMode------" + heightMode);
-//      setFillViewport(true);
+//        setFillViewport(true);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         Log.e("TAG", "onMeasure: scrollview  heightMode------" + heightMode);

@@ -25,7 +25,7 @@ public class FramLayoutAndListViewTestActivity extends AppCompatActivity {
         listView = (MyTestListView) findViewById(R.id.test_listview);
         framelayout = (MyTestFramLayout) findViewById(R.id.framelayout);
         List<Map<String, Object>> listems = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 33; i++) {
             Map<String, Object> map = new HashMap<>();
             map.put("name", "小明" + i);
             listems.add(map);
